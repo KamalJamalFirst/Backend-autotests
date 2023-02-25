@@ -1,8 +1,9 @@
 import pymysql, os
 from pymysql import cursors
 from ..configs.host_configs import DB_HOSTS
+from loguru import logger
 
-
+@logger.catch()
 def create_connection_with_db(sql):
     env = os.environ.get('ENV', 'test')
     create_connection_with_db = pymysql.connect(host=DB_HOSTS[env][0],
@@ -12,6 +13,7 @@ def create_connection_with_db(sql):
         cur = create_connection_with_db.cursor(cursors.DictCursor)
         cur.execute(sql)
         rs_dict = cur.fetchall()
+        import pdb; pdb.set_trace()
         cur.close()
     except Exception as e:
             raise Exception('Failed running sql \n'

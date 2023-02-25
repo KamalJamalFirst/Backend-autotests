@@ -1,4 +1,5 @@
 from faker import Faker
+from loguru import logger
 
 
 def generate_random_user_credentials_for_registration(domain=None, email_prefix=None, first_name=None,
@@ -12,7 +13,7 @@ def generate_random_user_credentials_for_registration(domain=None, email_prefix=
                         'username': username,
                         'password': password
                         }
-
+    logger.debug(f'Random user data at the start {user_credentials}')
     check_user_credentials = {'email': Faker().email(),
                               'first_name': (fn := Faker().first_name()),
                               'last_name': (ln := Faker().last_name()),
@@ -38,6 +39,7 @@ def generate_random_user_credentials_for_registration(domain=None, email_prefix=
                 user_credentials[check] = check_user_credentials[check]
 
     user_credentials.update(kwargs)
+    logger.debug(f'Random user data after checking all parameters {user_credentials}')
 
     return user_credentials
 

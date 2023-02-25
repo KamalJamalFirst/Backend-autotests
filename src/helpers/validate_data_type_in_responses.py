@@ -1,4 +1,5 @@
 from pydantic import BaseModel, PydanticTypeError
+from loguru import logger
 
 class PostNewUserDataTypeValidator(BaseModel):
     id: int
@@ -6,10 +7,10 @@ class PostNewUserDataTypeValidator(BaseModel):
     first_name: str
     last_name: str
     username: str
-
-
-    def parse_data(self, response):
-        try:
-            self.parse_obj(response)
-        except PydanticTypeError as e:
-            print(e)
+@logger.catch()
+def parse_data(response):
+    try:
+        PostNewUserDataTypeValidator.parse_obj(response)
+    except PydanticTypeError as e:
+        return e
+    return True

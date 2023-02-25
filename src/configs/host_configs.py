@@ -2,7 +2,7 @@ import os
 
 API_HOSTS = {
     'test': ['http://localhost:8080',
-                 [os.environ.get('WC_KEY'), os.environ.get('WC_SECRET')]],
+                 [os.getenv('WC_KEY'), os.getenv('WC_SECRET')]],
     'dev': '',
     'prod': ''
 }
